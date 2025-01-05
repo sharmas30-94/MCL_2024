@@ -1,2 +1,2 @@
-This repository contains all the reproducable code for manuscript figures.
+This repository contains all the reproducible code for our manuscript figures.
 
