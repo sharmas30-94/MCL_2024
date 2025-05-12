@@ -1,0 +1,70 @@
+Gene.of.intrest	Pathway
+ATM	DNA Repair Pathways Full Network
+TP53	DNA Repair Pathways Full Network
+BRCA2	DNA Repair Pathways Full Network
+RAD50	DNA Repair Pathways Full Network
+BRCA1	DNA Repair Pathways Full Network
+MUTYH	DNA Repair Pathways Full Network
+NSD2	DNA Repair Pathways Full Network
+KMT2D	Histone/Chromatin Modification
+SMARCA4	Histone/Chromatin Modification
+ARID1A	Histone/Chromatin Modification
+KMT2C	Histone/Chromatin Modification
+KMT2B	Histone/Chromatin Modification
+SP140	Histone/Chromatin Modification
+UBR5	Ubiquitin Protein Transferase Activity
+CCND1	Cell Cycle
+SYNE1	Cell Cycle
+PCNT	Cell Cycle
+PCLO	Cell Cycle
+DYNC1I1	Cell Cycle
+SPEN	Notch Signaling Pathway
+EP300	Notch Signaling Pathway
+NCOR1	Notch Signaling Pathway
+NOTCH1	Notch Signaling Pathway
+NOTCH2	Notch Signaling Pathway
+CARD11	NF-kappaB
+NFKBIE	NF-kappaB
+BIRC3	Apoptosis
+SPTAN1	Apoptosis
+TSC2	PI3K-Akt signaling pathway
+ERBB2	PI3K-Akt signaling pathway
+HLA_C	Other
+S1PR1	Other
+DNAH5	Other
+KIAA1671	Other
+ANK2	Other
+APC	Other
+BORCS8_MEF2B	Other
+DAZAP1	Other
+SAMHD1	Other
+TET2	Other
+ZFHX4	Other
+C2orf71	Other
+CHD2	Other
+FAM228B	Other
+IGLL5	Other
+LRP2	Other
+MEFV	Other
+PUF60	Other
+ZNF732	Other
+CHD7	Other
+FAT4	Other
+HMCN1	Other
+MYO9B	Other
+ZNF546	Other
+ZNF92	Other
+BCOR	Other
+FAT1	Other
+HMCN2	Other
+LRP1B	Other
+MED12	Other
+MET	Other
+PIEZO1	Other
+TNFRSF13B	Other
+IGHV4-34	Other
+NOS3	Other
+KDR	Other
+GNAS	Other
+EWSR1	Other
+PLCB1	Other
