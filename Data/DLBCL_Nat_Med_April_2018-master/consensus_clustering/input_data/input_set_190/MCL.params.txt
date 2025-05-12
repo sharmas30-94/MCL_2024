@@ -1,0 +1,13 @@
+Run of NMF on  2025-03-14 05:11:35
+input.ds = /Users/sharmas30/Desktop/code for MCL/Figure3/DLBCL_Nat_Med_April_2018-master/consensus_clustering/MCL.normalized.gct
+k.init =  4
+k.final = 10
+num.clusterings = 20
+maxniter = 1500
+error.function = divergence
+rseed = 12345678
+directory = 
+stopconv = 40
+stopfreq = 10
+non.interctive.run = FALSE
+doc.string = MCL
