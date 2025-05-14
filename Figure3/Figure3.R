@@ -10,7 +10,7 @@ library("stringr")
 library("impute")
 
 # Read the data file
-data <- read.table("/Users/sharmas30/Desktop/code for MCL/Figure3/DLBCL_Nat_Med_April_2018-master/consensus_clustering/input_data/MCL_Significant_events.txt", header=TRUE, sep="\t", check.names=FALSE)
+data <- read.table("~/Figure3/Data/DLBCL_Nat_Med_April_2018-master/consensus_clustering/input_data/MCL_Significant_events.txt", header=TRUE, sep="\t", check.names=FALSE)
 
 # Define the output folder
 input_folder <- "input_data"
@@ -47,7 +47,7 @@ for (i in 1:iterations) {
   write.table(final_sample, file = input_filename, row.names = FALSE, sep="\t", quote=FALSE)
 }
 
-iteration_dirs <- list.files("/Users/sharmas30/Desktop/code for MCL/Figure3/DLBCL_Nat_Med_April_2018-master/consensus_clustering/input_data")
+iteration_dirs <- list.files("~/Figure3/Data/DLBCL_Nat_Med_April_2018-master/consensus_clustering/input_data")
 
 # Sort directories numerically
 iteration_dirs <- iteration_dirs[order(as.numeric(gsub("\\D", "", basename(iteration_dirs))))]
@@ -133,14 +133,19 @@ for (iteration_dir in 1:length(iteration_dirs)) {
   file.rename(files_to_move1, file.path(dest_dir1, basename(files_to_move1)))
   }
 
-selected_set <- "input_set_94"
+
+
+
+#Selected Set
+
+selected_set <- "input_set_86"
 memb<- "membership.2"
 setwd(paste0("/Users/sharmas30/Desktop/code for MCL/Figure3/DLBCL_Nat_Med_April_2018-master/consensus_clustering/input_data/", selected_set))
 print(getwd())
  
 data1<-read.table("MCL.membership.txt", header=TRUE, sep="\t", row.names=1)
 data1 <- data1[order(data1[, memb]), ]
-data2 <- read.table("/Users/sharmas30/Desktop/code for MCL/Figure3/DLBCL_Nat_Med_April_2018-master/consensus_clustering/input_data/input_set_94/set_94.txt", header=TRUE, sep="\t", row.names=1)
+data2 <- read.table("/Users/sharmas30/Desktop/code for MCL/Figure3/DLBCL_Nat_Med_April_2018-master/consensus_clustering/input_data/input_set_86/set_86.txt", header=TRUE, sep="\t", row.names=1)
 rownames(data1)<-gsub("-", ".", rownames(data1))
 m<-match(rownames(data1), colnames(data2))
 data3<-data2[,m]
@@ -315,36 +320,10 @@ for (i in 1:length(k)) {
   print(h) # Print the plot
   dev.off()
   
-  # Extract text content from the PDF
-  pdf_text_content <- pdf_text(pdf_file)
-  cleaned_text <- gsub("\\s+", " ", pdf_text_content)
-  
-  # Extract column and row names from the cleaned text
-  cols <- colnames(subset_data) # Extract columns specific to this subset
-  rows <- rownames(subset_data) # Extract rows specific to this subset
-  
-  # Create regex pattern with word boundaries for accurate matching
-  cols_pattern <- paste0("\\b(", paste(cols, collapse = "|"), ")\\b")
-  rows_pattern <- paste0("\\b(", paste(rows, collapse = "|"), ")\\b")
-  
-  # Extract matched column names and row names
-  extracted_cols <- unique(unlist(str_extract_all(cleaned_text, cols_pattern)))
-  extracted_rows <- unique(unlist(str_extract_all(cleaned_text, rows_pattern)))
-  
-  # Append to final lists
-  final_cols <- unique(c(final_cols, extracted_cols))
-  final_rows <- unique(c(final_rows, extracted_rows))
 }
 
-# Print or store final extracted column and row names
-print(final_cols)
-print(final_rows)
-
-
 # Read the data again
-data3 <- read.csv("check.csv", header = TRUE, sep = ",", row.names = 1, check.names = FALSE)
-
-
+data3 <- read.csv("arranged.csv", header = TRUE, sep = ",", row.names = 1, check.names = FALSE)
 pdf("new10.pdf", height = 15, width = 20)
 oncoPrint(
   data3,
@@ -357,55 +336,18 @@ oncoPrint(
   alter_fun_is_vectorized = FALSE,
   show_column_names = TRUE,
   column_names_gp = gpar(fontsize = 8),
-  column_order = sample_ids, 
-  row_order = genomic_order  
+  column_order = 1:ncol(data3), 
+  row_order = 1:nrow(data3) 
 )
 dev.off()
 
+#### Clinical cluster analysis ####
 
-
-
-
-
-# Load required libraries
-library(pdftools)
-library(stringr)
-library(dplyr)
-
-# Define the PDF file path
-pdf_file <- "Survival_Analysis_Report.pdf"
-
-# Extract text from the PDF
-pdf_text <- pdf_text(pdf_file)
-
-# Combine text into a single string
-pdf_text_combined <- paste(pdf_text, collapse = " ")
-
-# Extract p-values using regex
-p_values <- str_extract_all(pdf_text_combined, "p\\s*=\\s*[0-9\\.]+")[[1]]
-
-# Clean extracted p-values
-p_values <- as.numeric(str_extract(p_values, "[0-9\\.]+"))
-
-# Create a data frame with the extracted p-values
-df <- data.frame(PDF_Name = pdf_file, t(p_values))
-colnames(df)[-1] <- paste0("membership", ifelse(seq_along(p_values) == 1, "", paste0(".", seq_along(p_values) - 1)))
-
-# Print the data frame
-print(df)
-
-# Save as CSV (optional)
-write.csv(df, "extracted_p_values.csv", row.names = FALSE)
-
-
-
-
-# Load necessary libraries
 library(dplyr)
 library(tidyr)
 
 # Load your data (update the path if needed)
-setwd("/Users/sharmas30/Downloads/Fig4")
+setwd("")
 df <- read.csv("Cohort-1.csv")
 
 # List of binary clinical variables to test
@@ -476,5 +418,138 @@ enrichment_results <- do.call(rbind, results)
 print(enrichment_results)
 
 # Optionally, write to CSV
- write.csv(enrichment_results, "cluster_enrichment_results.csv", row.names = FALSE)
+write.csv(enrichment_results, "cluster_enrichment_results.csv", row.names = FALSE)
+ 
 
+
+##Arange Clinical data by the order of the clusters
+ column_order <- c(
+   "GROUP6_1", "UNMC_44", "47_3", "MCL_28", "GROUP7_15", "MCL_38", "MCL_98", "UNMC_28", "MCL_128",
+   "MCL_35", "UNMC_23", "MCL_71", "GROUP5_7", "MCL_24", "UNMC_37", "IA_02", "MCL_109", "SC01_10",
+   "M47_025", "IA4203", "UNMC_79_C1", "UNMC_47", "GROUP5_10", "UNMC_81", "UNMC_59", "UNMC_71_A5",
+   "GROUP5_9", "GROUP4_11", "WCM032", "GROUP4_8", "UNMC_8", "GROUP7_5", "GROUP5_3", "HUMC_9",
+   "1_33", "GROUP7_9", "1_87", "IA2084", "GROUP7_20", "HUMC4", "S92_5", "HUMC_7", "IA4227",
+   "MCL_40", "UNMC_48", "GROUP7_22", "SPECS_3164", "IA4289", "GROUP4_3", "S03_8", "MCL_146", "HUMC_8",
+   "UNMC_18", "HUMC_6", "S03_3", "HUMC3", "GROUP7_13", "1_90", "GROUP4_9", "GROUP7_1", "1_16",
+   "WCM062", "UNMC_5", "47_027", "IA1857", "GROUP4_2", "GROUP5_6", "GROUP7_17", "22_51", "MCL_37",
+   "IA2268", "GROUP4_1", "GROUP4_4", "UNMC_20", "GROUP6_3", "MCL_39", "GROUP7_6", "1_97",
+   "GROUP7_3", "1_31", "GROUP4_5", "1_39", "1_64", "1_61", "GROUP4_6", "HUMC_12",
+   "1_88", "GROUP5_2", "1_6", "1_86", "1_85", "SC08_2", "IA2745", "HUMC5", "GROUP5_5",
+   "IA834", "GROUP5_8", "MCL_126", "MCL_14", "IA04", "IA2852", "GROUP5_4", "MCL_61", "HUMC1",
+   "IA2334", "MCL_122", "UNMC_7", "UNMC_68_A2", "GROUP5_1", "S87_4", "SPECS_3163", "SPECS_3155",
+   "GROUP7_11", "SC02_11", "S06_166", "S89_9", "HUMC_10", "WCM041", "MCL_42", "UNMC_55", "GROUP7_14",
+   "47_022", "IA4885", "S08_1", "1_84", "SC86_6", "IA68", "47_023", "1_51", "GROUP7_2",
+   "47_024", "HUMC_15", "BC04", "47_029", "1_24", "UNMC_69", "SPECS_3157", "GROUP7_19",
+   "MCL_138", "MCL_33", "SPECS_3158", "GROUP6_4", "GROUP6_2", "IA1147", "GROUP4_7", "S94_7",
+   "WCM045", "GROUP4_10", "UNMC_62", "SPECS_1917", "MCL_75", "MCL_45", "MCL_25"
+ )
+ 
+ 
+ pdf("Figure_3_clinical_annotation.pdf", height=20, width=15)
+ oncoplot(
+   maf = merged_maf,
+   fontSize = 0.4,
+   sepwd_genes = 1,
+   pathways = k,
+   clinicalFeatures = c('BIOPSY_TYPE', 'SOX11_IHC', 'TP53_IHC', 'Ki67_Counts', 'RITUXIMAB_ADMINISTERED', 'AGE_Status', 'AAS', 'SEX'), 
+   annotationColor = c(fabcolors4, fabcolors1, fabcolors2, fabcolors3, fabcolors6, fabcolors7, fabcolors8, fabcolors5),
+   anno_height = 2,
+   gene_mar = 9,
+   drawBox = TRUE,
+   sepwd_samples = 0.8,
+   legend_height = 2,
+   logColBar =FALSE,
+   sampleOrder = column_order 
+ )
+ dev.off()
+
+ 
+ 
+ ## Figure 3B
+ ##Left Panel
+ data<-read.csv("~/Figure3/Data/analysis_nmf.csv", header=TRUE, sep=",")
+ data<-data[, c(1, 2, 40, 41, 59)]
+ data<-na.omit(data)
+ data<-subset(data, data$RITUXIMAB_ADMINISTERED_PRIMARY_REGIMEN_YES_1_NO_0 == "1")
+ surv_object <- Surv(time = data$OVERALL_SURVIVAL_MONTHS, event = data$OVERALL_SURVIVAL_STATUS)
+ km_fit <- survfit(surv_object ~ NMF.membership.2, data = data)
+ pdf("surv_left.pdf", height = 8, width=10)
+ ggsurvplot(km_fit, data = data,
+            title = "Kaplan-Meier Survival Curve",
+            xlab = "Survival Time (Months)",
+            ylab = "Survival Probability",
+            surv.median.line = "hv",   # Add median survival line
+            risk.table = TRUE,         # Add risk table below the plot
+            ggtheme = theme_minimal(), pval = TRUE)  # 
+ dev.off()
+ 
+##Right Panel
+ data<-read.csv("~/Figure3/Data/analysis_nmf.csv", header=TRUE, sep=",")
+ data<-data[, c(1, 2, 40, 41, 59)]
+ data<-na.omit(data)
+ data<-subset(data, data$RITUXIMAB_ADMINISTERED_PRIMARY_REGIMEN_YES_1_NO_0 == "1")
+ surv_object <- Surv(time = data$OVERALL_SURVIVAL_MONTHS, event = data$OVERALL_SURVIVAL_STATUS)
+ km_fit <- survfit(surv_object ~ NMF.membership.2, data = data)
+ pdf("surv_left.pdf", height = 8, width=10)
+ ggsurvplot(km_fit, data = data,
+            title = "Kaplan-Meier Survival Curve",
+            xlab = "Survival Time (Months)",
+            ylab = "Survival Probability",
+            surv.median.line = "hv",   # Add median survival line
+            risk.table = TRUE,         # Add risk table below the plot
+            ggtheme = theme_minimal(), pval = TRUE)  # 
+ dev.off()
+ 
+ # Load and clean the data
+ data <- read.csv("~/Figure3/Data/hj.csv", header = TRUE, sep = ",")
+ data <- data[, c(1, 2, 3, 32, 33, 51)]
+ data <- na.omit(data)
+ 
+ # Subset only Rituximab-treated patients
+ data <- subset(data, RITUXIMAB_ADMINISTERED_PRIMARY_REGIMEN_YES_1_NO_0 == 1)
+ 
+ # Ensure survival status is numeric (0 = alive, 1 = dead)
+ data$OVERALL_SURVIVAL_STATUS <- as.numeric(as.character(data$OVERALL_SURVIVAL_STATUS))
+ 
+ # Ensure cluster is a factor
+ data$Merged.cluster <- as.factor(data$Merged.cluster)
+ 
+ # Build the survival object and fit
+ surv_object <- Surv(time = data$OVERALL_SURVIVAL_MONTHS, event = data$OVERALL_SURVIVAL_STATUS)
+ km_fit <- survfit(surv_object ~ Merged.cluster, data = data)
+ 
+ # Plot Kaplan-Meier curve
+ ggsurvplot(km_fit, data = data,
+            title = "Kaplan-Meier Survival Curve",
+            xlab = "Survival Time (Months)",
+            ylab = "Survival Probability",
+            surv.median.line = "hv",
+            risk.table = TRUE,
+            pval = TRUE,
+            palette = c("black", "grey", "red"),   # Correct spelling
+            ggtheme = theme_minimal())
+
+ 
+ ## Figure 3C analysis performed using GSEA
+ data<-read.table("~/Figure3/Data/RNA_seq_Heatmap.txt", header=TRUE, sep="\t")
+ if (!require("pheatmap")) install.packages("pheatmap")
+ library(pheatmap)
+ 
+ # Set rownames as pathway names
+ rownames(data) <- data$NAME
+ 
+ # Select only numeric expression columns
+ mat <- as.matrix(data[, c("Average.poor", "Average_Int", "Average_Good")])
+ 
+ # Generate the heatmap
+ pheatmap(mat,
+          cluster_rows = TRUE,
+          cluster_cols = TRUE,
+          scale = "row",  # normalize each row (optional)
+          color = colorRampPalette(c("navy", "white", "firebrick3"))(300),
+          main = "Hallmark Signature Activity Across Prognostic Groups")
+ 
+ 
+ 
+ 
+ 
