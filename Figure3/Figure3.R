@@ -549,7 +549,79 @@ write.csv(enrichment_results, "cluster_enrichment_results.csv", row.names = FALS
           color = colorRampPalette(c("navy", "white", "firebrick3"))(300),
           main = "Hallmark Signature Activity Across Prognostic Groups")
  
+ ## Figure 3D
+ ### Cibersort Analysis in three groups
+ if (!require("FSA")) install.packages("FSA", dependencies=TRUE)
+ install.packages("rcompanion")
  
+ library(FSA)
+ library("rcompanion")
+ 
+ 
+ 
+ data<-read.csv("~/Figure3/Data/nmf_analysis_corrected.csv", header=TRUE, sep=",")
+ data$Merged.cluster <- NA
+ 
+ data$Merged.cluster[data$NMF.membership.2 %in% c('2', '3', '4')] <- "Moderate OS"
+ data$Merged.cluster[data$NMF.membership.2 == '5'] <- "Poor OS"
+ data$Merged.cluster[data$NMF.membership.2 %in% c('1', '6')] <- "Good OS"
+ 
+ # Remove rows where Merged.cluster is NA
+ data <- na.omit(data)
+ 
+ # Filter dataset for RNA.Seq.Status = TRUE
+ data <- data[data$RNA.Seq.Status == TRUE, ]
+ 
+ # Convert Merged.cluster to a factor (categorical variable)
+ data$Merged.cluster <- as.factor(data$Merged.cluster)
+ 
+ # Define selected immune-related columns
+ selected_columns <- c("T.cells.follicular.helper", "Macrophages.M0")
+ 
+ # Create an empty list to store plots
+ plots <- list()
+ 
+ # Loop through selected immune-related columns to generate violin-box plots
+ for (i in seq_along(selected_columns)) {
+   col <- selected_columns[i]
+   
+   # Perform Dunn's test
+   dunn_result <- tryCatch({
+     dunnTest(data[[col]] ~ data$Merged.cluster, method = "bonferroni")
+   }, error = function(e) NULL)
+   
+   if (!is.null(dunn_result)) {
+     dunn_pvals <- as.data.frame(dunn_result$res)
+     colnames(dunn_pvals) <- c("group1", "group2", "Statistic", "p_value")
+     
+     # Format p-values for labeling
+     dunn_pvals$label <- ifelse(dunn_pvals$p_value < 0.001, "***", 
+                                ifelse(dunn_pvals$p_value < 0.01, "**", 
+                                       ifelse(dunn_pvals$p_value < 0.05, "*", "ns")))
+   } else {
+     dunn_pvals <- NULL
+   }
+   
+   # Generate the plot
+   p <- ggplot(data, aes(x = Merged.cluster, y = .data[[col]], fill = Merged.cluster)) +
+     geom_violin(alpha = 0.6, trim = FALSE) +
+     geom_boxplot(width = 0.2, position = position_dodge(0.9), outlier.shape = NA) +
+     stat_compare_means(method = "kruskal.test", label = "p.signif") +
+     theme_minimal() +
+     labs(title = paste(col, "Distribution Across Merged Clusters"), x = "Merged Cluster", y = col) +
+     theme(legend.position = "none")
+   
+   if (!is.null(dunn_pvals) && nrow(dunn_pvals) > 0) {
+     p <- p + stat_pvalue_manual(dunn_pvals, label = "label", tip.length = 0.01, y.position = max(data[[col]], na.rm = TRUE) * 1.1)
+   }
+   
+   plots[[i]] <- p
+ }
+ 
+ # Save plots as a PDF with a layout
+ pdf("selected_immune_violin_boxplot.pdf", height = length(selected_columns) * 3, width = 10)
+ do.call(grid.arrange, c(plots, ncol = 1))
+ dev.off()
  
  
  
