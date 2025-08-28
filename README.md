@@ -18,7 +18,7 @@ Within each figure directory:
 
 
 
-## Data Paths
+## Data Paths for users
 To run these scripts on your own system, you must edit the data_dir variable at the top of each script to point to the location where you have downloaded the corresponding input data.
 - User: edit this path to where you downloaded the data
 - data_dir <- "Figure1/Data"   # default (relative path inside this repo)
