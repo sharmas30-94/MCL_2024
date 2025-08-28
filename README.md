@@ -27,3 +27,8 @@ To run these scripts on your own system, you must edit the data_dir variable at 
 - data_dir <- "/path/to/my/local/data"
 - Load file
 data <- read.csv(file.path(data_dir, "input.csv"))
+
+
+
+## Data Availability
+Aligned BAM files from Coh-1 and Coh-2 have been deposited under controlled access at the database of Genotypes and Phenotypes **(dbGaP)(study accession: phs003849.v1.p1)**. All raw sequencing data are publicly available in the NCBI Gene Expression Omnibus (GEO) under the following accession codes: RNA-seq of patient samples: **GSE271664** [https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE271664], CUT&RUN in MCL cell lines: **GSE271594** [https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE271594], and RNA-seq in MCL cell lines: **GSE271503** [https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE271503]. All processed data supporting this study, including results from genomics, tumor microenvironment, and CUT&RUN assays, are provided as **Supplementary Tables/Data** accompanying the main text. Raw IMC data are generated in proprietary file formats and cannot be deposited in a public repository; however, the processed IMC datasets have been provided as Supplementary Tables, enabling independent re-analysis from the starting point. However, the Raw IMC data underlying the TME analysis are available from the corresponding author upon reasonable request. These data are subject to restricted access due to proprietary file format and storage limitations. Requests will be reviewed by the corresponding author, and qualified researchers will be granted access within (1-2 weeks). All other data generated in this study are available within the **Source Data file** associated with this manuscript.
