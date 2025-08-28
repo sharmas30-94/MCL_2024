@@ -1,9 +1,10 @@
 ## Functional genomics and tumor microenvironment analysis reveal prognostic biological subtypes in Mantle cell lymphoma
 
-This repository contains the code used to generate figures in the manuscript. Each figure in this repository has its own directory (e.g., `Figure1/`, `Figure2/`, …).  
+This repository contains the code for all manuscript figures, organized by directory (Figure1/, Figure2/, …). Figures 1–4, 6, and 7 were generated using a combination of Linux tools and R, while Figure 5 (tumor microenvironment analysis) was produced using R and Python.
+
 Within each figure directory:  
 - `Data/` contains all input files required to generate the figure.  
-- `*.R` or `*.py` scripts implement the analysis.  
+- `*.R` or `*.ipynb` scripts implement the analysis.  
 - Below is the mapping of figures to code and data sources.
 
 | Figure | Location in Repo | Main Script(s) | Input Data Type | Output Data Type |
