@@ -1,4 +1,5 @@
 ## Functional genomics and tumor microenvironment analysis reveal prognostic biological subtypes in Mantle cell lymphoma
+[![DOI](https://zenodo.org/badge/907079909.svg)](https://doi.org/10.5281/zenodo.17143857)
 
 This repository contains the code for all manuscript figures, organized by directory (Figure1/, Figure2/, …). Figures 1–4, 6, and 7 were generated using a combination of Linux tools and R, while Figure 5 (tumor microenvironment analysis) was produced using R and Python.
 
