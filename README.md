@@ -15,7 +15,7 @@ Within each figure directory:
 | 3 | `MCL_2024/Figure3/` | Figure_3.R | Mutation and Copy number aberrations across 153 cases from Coh-1 (n=153), Clinical Metadata, RNA-Seq (n=47), Cibersortx Immune Deconvolution profiles (n=47) | Fig_3a.pdf, Fig_3b.pdf, Fig_3c.pdf, Fig_3d.pdf |
 | 4 | `MCL_2024/Figure4/` | Figure_4.R | Mutation and Copy number aberrations across all cases from Coh-1 and Coh-2 (n=290), Clinical Metadata | Fig_4a.pdf, Fig_4b.pdf, Fig_4c.pdf|
 | 5 | `MCL_2024/Figure5/` | TME_analysis.ipynb | Tumor microenvironment (IMC processed data), cyCombine TMA source harmonization, image generation | Fig_5a.pdf, Fig_5b.pdf, Fig_5c.pdf, Fig_5d.pdf, Fig_5e.pdf, Fig_5f.pdf, Fig_5g.pdf|
-| 6 | `MCL_2024/Figure6/` | Analysis done using Genepattern | CUT&RUN analysis, Differential gene and binding analysis using DESeq2, Functional annotation of Differential genes and promoters | |
+| 6 |  | Analysis done using Genepattern | CUT&RUN analysis, Differential gene and binding analysis using DESeq2, Functional annotation of Differential genes and promoters | |
 | 7 | `MCL_2024/Figure7/` | Figure_7.R | CUT&RUN bigWigs – normalized coverage tracks representing histone modification or transcription factor binding signals across the genome in TP53 modified and WT-TP53 Z-138 MCL cell line | Fig_7b.pdf|
 
 
